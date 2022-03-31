@@ -1,0 +1,960 @@
+// mount D: D:\prolog
+// D:\\prolog
+
+// clearwindow
+
+Simple_Problem1: Justification Yes or no
+
+
+domains name,food=symbol
+
+predicates
+	likes(name,food)
+clauses
+	likes(mamun,rice).
+	likes(rabi,tea).
+	likes(forid,bread).
+
+
+Simple_Problem2: Justification Yes or no
+predicates
+	likes(symbol,symbol)
+clauses
+	likes(mamun,Rice).
+	likes(rabi,tea).
+	likes(forid,bread).
+
+See Goal:
+	
+	likes(mamun,Rice)
+	likes(rabi,Rice)
+
+
+Simple_Problem3: Find which diseases have the following symptom
+
+domains
+disease, indication = symbol
+
+predicates
+	symptom(disease,indication)
+	
+clauses
+	symptom(chiken_pox,high_fever).
+	symptom(chiken_pox,chills).
+	symptom(flu,chills).
+	symptom(cold,mild_body_ache).
+	symptom(flu,severe_body_ache).
+	symptom(cold,runny_nose).
+	symptom(flu,runny_nose).
+	symptom(flu,moderate_cough).
+	
+
+Goal:-
+	symptom(Disease,runny_nose)
+
+Goal:_
+	symptom(cold,Symptom)
+
+Goal:_
+	symptom(_,chills)
+Goal:_
+	symptom(Disease,mild_body_ache) and symptom(Disease,runny_nose) 
+
+Goal:_
+	symptom(flu,Symptom) and symptom(cold,Symptom) 
+
+Goal:_
+	symptom(chiken_pox,Symptom) 
+
+symptom
+Goal:_
+	symptom(chiken_pox,S) 
+
+Goal:_
+	symptom(chiken_pox,Indication) 
+
+Problem:1 chapter4:
+Task1: Specify a goal to list all Oregon (tr) cities
+
+goal:- 
+location(X,tr)
+goal:-
+location(_,tr)
+goal:-
+location(City,tr)
+Task2: Specify a goal to find the state in which Jackson is located
+goal:-
+location(jackson,X)
+
+domains
+	city,sort_name=symbol
+predicates
+	location(city,sort_name)
+clauses
+	location(portland,tr).
+	location(washington,dc).
+	location(jackson,ms).
+	location(meridian,ms).
+	location(salem,tr).
+
+
+problem:2 chapter4:
+Task1:
+goal:- 
+symptom(X,runny_nose) and symptom(X,mild_body_ache)
+
+
+
+goal:- 
+symptom(X,runny_nose) and symptom(Y,mild_body_ache)
+
+
+goal:- 
+symptom(X,runny_nose) and symptom(X,Y)
+
+
+goal:- 
+symptom(cold,X) and symptom(flu,X)
+
+Problem: 3
+domains X,Y,Sum=integer
+predicates
+	add(X,Y,Sum)
+clauses
+	add(X,Y,Sum):-
+		Sum=X+Y.
+goal: add(4,5,Sum)
+
+
+Chapter:5
+Problem:1(Fig5.1)
+/*Medical diagnostic system*/
+
+domains
+	disease,indication,name=symbol
+predicates
+	hypothesis(name,disease)
+	symptom(name,indication)
+clauses
+	symptom(charlie,fever).
+	symptom(charlie,rash).
+	symptom(charlie,headache).
+	symptom(charlie,runny_nose).
+
+	hypothesis(Patient,measles) :-
+		symptom(Patient,fever),
+		symptom(Patient,caugh),
+		symptom(Patient,conjunctivitis),
+		symptom(Patient,runny_nose),
+		symptom(Patient,rash).
+
+
+	hypothesis(Patient,german_measles) :-
+		symptom(Patient,fever),
+		symptom(Patient,headache),
+		symptom(Patient,runny_nose),
+		symptom(Patient,rash).
+
+
+	hypothesis(Patient,flu) :-
+		symptom(Patient,fever),
+		symptom(Patient,headache),
+		symptom(Patient,body_ache),
+		symptom(Patient,conjunctivitis),
+		symptom(Patient,chills),
+		symptom(Patient,sore_throat),
+		symptom(Patient,cough),
+		symptom(Patient,runny_nose).
+
+
+	hypothesis(Patient,common_cold) :-
+		symptom(Patient,headache),
+		symptom(Patient,sneezing),
+		symptom(Patient,sore_throat),
+		symptom(Patient,chills),
+		symptom(Patient,runny_nose).
+
+
+	hypothesis(Patient,mumps) :-
+		symptom(Patient,fever),
+		symptom(Patient,swollen_glands).
+		
+
+	hypothesis(Patient,chicken_pox) :-
+		symptom(Patient,fever),
+		symptom(Patient,rash),
+		symptom(Patient,body_ache),
+		symptom(Patient,chills).
+
+
+	hypothesis(Patient,whooping_cough) :-
+		symptom(Patient,cough),
+		symptom(Patient,rash),
+		symptom(Patient,sneezing),
+		symptom(Patient,runny_nose).
+
+
+
+Chapter:6
+
+Problem: Use the build-in-function writef();
+
+domains
+      	
+      
+predicates
+     	
+     	go
+       
+clauses
+	go :-
+
+		writef("%-10 #%5.0 $%3.2\n",fan,23,3.1).
+
+//problem:simple program to read data from user
+
+
+domains
+      	disease, indication = symbol
+      	patient = string
+      
+predicates
+     	hypothesis(patient,disease)
+     	symptom(patient,indication)
+     	response(char)
+     	go
+     
+     
+clauses
+	go :-
+		write("What is the patient's name? "),
+		readln(Patient),
+		hypothesis(Patient,Disease),
+		write(Patient," probably has ",Disease,"."),nl.
+		
+	go :-
+		write("Sorry, i don't seem to be able to"),nl,
+		write("diagonose the disease."),nl.
+		
+	symptom(Patient,fever) :-
+		write("Does ",Patient," have a fever (y/n) ?"),
+		response(Reply),
+		Reply='y'.
+   
+   	symptom(Patient,rash) :-
+		write("Does ",Patient," have a rash (y/n) ?"),
+		response(Reply),
+		Reply='y'.
+		
+	symptom(Patient,headache) :-
+		write("Does ",Patient," have a headache (y/n) ?"),
+		response(Reply),
+		Reply='y'.
+		
+	symptom(Patient,cough) :-
+		write("Does ",Patient," have a cough (y/n) ?"),
+		response(Reply),
+		Reply='y'.
+	
+	symptom(Patient,sneezing) :-
+		write("Does ",Patient," have a sneezing (y/n) ?"),
+		response(Reply),
+		Reply='y'.
+	symptom(Patient,runny_nose) :-
+		write("Does ",Patient," have a runny_nose (y/n) ?"),
+		response(Reply),
+		Reply='y'.
+   
+   
+   
+	hypothesis(Patient,german_measles):-    
+   		symptom(Patient,fever),
+   		symptom(Patient,headache),
+     		symptom(Patient,rash).
+   
+	
+   
+	hypothesis(Patient,whooping_cough):-    
+   		symptom(Patient,cough),
+   		symptom(Patient,sneezing),
+   		symptom(Patient,runny_nose).
+   		
+   	response(Reply) :-
+   		readchar(Reply),
+   		write(Reply),nl.
+
+
+
+
+problem: Medical diognasis systen that read data from user
+
+
+domains
+      	disease, indication = symbol
+      	patient, name = string
+      
+predicates
+     	hypothesis(patient,disease)
+     	symptom(patient,indication)
+     	response(char)
+     	go
+     
+     
+clauses
+	go :-
+		write("What is the patient's name? "),
+		readln(Patient),
+		hypothesis(Patient,Disease),
+		write(Patient," probably has ",Disease,"."),nl.
+		
+	go :-
+		write("Sorry, i don't seem to be able to"),nl,
+		write("diagonose the disease."),nl.
+		
+	symptom(Patient,fever) :-
+		write("Does ",Patient," have a fever (y/n) ?"),
+		response(Reply),
+		Reply='y'.
+   
+   	symptom(Patient,rash) :-
+		write("Does ",Patient," have a rash (y/n) ?"),
+		response(Reply),
+		Reply='y'.
+		
+	symptom(Patient,headache) :-
+		write("Does ",Patient," have a headache (y/n) ?"),
+		response(Reply),
+		Reply='y'.
+		
+	symptom(Patient,runny_nose) :-
+		write("Does ",Patient," have a runny_nose (y/n) ?"),
+		response(Reply),
+		Reply='y'.
+   	
+   	symptom(Patient,conjunctivities) :-
+		write("Does ",Patient," have a conjunctivitis (y/n) ?"),
+		response(Reply),
+		Reply='y'.
+   
+   	symptom(Patient,cough) :-
+		write("Does ",Patient," have a cough (y/n) ?"),
+		response(Reply),
+		Reply='y'.
+   
+   	symptom(Patient,body_ache) :-
+		write("Does ",Patient," have a body_ache (y/n) ?"),
+		response(Reply),
+		Reply='y'.
+		
+	symptom(Patient,chills) :-
+		write("Does ",Patient," have a chills (y/n) ?"),
+		response(Reply),
+		Reply='y'.	
+		
+	symptom(Patient,sore_throat) :-
+		write("Does ",Patient," have a sore_throat (y/n) ?"),
+		response(Reply),
+		Reply='y'.
+		
+	symptom(Patient,sneezing) :-
+		write("Does ",Patient," have a sneezing (y/n) ?"),
+		response(Reply),
+		Reply='y'.
+		
+	symptom(Patient,swollen_glands) :-
+		write("Does ",Patient," have swollen glands (y/n) ?"),
+		response(Reply),
+		Reply='y'.
+			
+	hypothesis(Patient,measles) :-    
+   		symptom(Patient,fever),
+   		symptom(Patient,cough),
+   		symptom(Patient,conjunctivities),
+   		symptom(Patient,runny_nose),
+   		symptom(Patient,rash).
+   
+	hypothesis(Patient,german_measles):-    
+   		symptom(Patient,fever),
+   		symptom(Patient,headache),
+   		symptom(Patient,runny_nose),
+   		symptom(Patient,rash).
+   
+	hypothesis(Patient,flu):-    
+   		symptom(Patient,fever),
+   		symptom(Patient,headache),
+   		symptom(Patient,body_ache),
+   		symptom(Patient,conjunctivities),
+   		symptom(Patient,chills),
+   		symptom(Patient,sore_throat),
+   		symptom(Patient,cough),
+   		symptom(Patient,runny_nose).
+   	
+   	  
+  	hypothesis(Patient,comon_cold):-    
+   		symptom(Patient,headache),
+   		symptom(Patient,sneezing),
+   		symptom(Patient,sore_throat),
+   		symptom(Patient,runny_nose),
+   		symptom(Patient,chills).
+   
+	hypothesis(Patient,mumps):-    
+   		symptom(Patient,fever),
+   		symptom(Patient,swollen_glands).
+   
+	hypothesis(Patient,chicken_pox):-    
+   		symptom(Patient,fever),
+   		symptom(Patient,chills),
+   		symptom(Patient,body_ache),
+   		symptom(Patient,rash).
+   
+	hypothesis(Patient,whooping_cough):-    
+   		symptom(Patient,cough),
+   		symptom(Patient,sneezing),
+   		symptom(Patient,runny_nose).
+   		
+   	response(Reply) :-
+   		readchar(Reply),
+   		write(Reply),nl.
+
+
+
+
+Chapter:7
+figure:7.1
+Rull:1
+predicates
+	location(string,string)
+	go
+clauses
+	
+	go:-
+	   location(City,State),
+	   writef("%-10   %2 \n",City,State),
+	   fail.%check result without go.
+	   
+	   go. %check result without go.
+
+	   location("Jackson","MS").
+	   location("Washington",dc).
+	   location("Raleigh","NC").
+figure:7.2
+Rull:1
+predicates
+	location(string,string)
+	go
+clauses
+	go:-
+	   writef("%-10   %5 \n","City","State"),
+	   fail.
+	go:-
+	   location(City,State),
+	   writef("%-10   %2 \n",City,State),
+	   fail.
+	   
+	   go.
+
+	   location("Jackson","MS").
+	   location("Washington","DC").
+	   location("Raleigh","NC").
+
+output: go
+
+
+Rull:2
+predicates
+	location(symbol,symbol)
+	go
+clauses
+	go:-
+	   writef("%-10   %5 \n","City","State"),
+	   fail.
+	go:-
+	   location(City,State),
+	   writef("%-10   %2 \n",City,State),
+	   fail.
+	   
+	   go.
+
+	   location(jackson,ms).
+	   location(washington,dc).
+	   location(raleigh,nc).
+
+Rull:3
+predicates
+	location(symbol,symbol)
+	go
+clauses
+	
+	go:-
+ 	   writef("%-10   %5 \n","City","State"),
+	   location(City,State),
+	   writef("%-10   %2 \n",City,State),
+	   fail.
+	   
+	   go.
+
+	   location(jackson,ms).
+	   location(washington,dc).
+	   location(raleigh,nc).
+
+Figure 7.3
+predicates
+	location(string,string)
+	go
+	chkstate(string)
+clauses
+	go:-
+	   writef("%-10   %5 \n","City","State"),
+	   fail.
+	go:-
+	   location(City,State),
+	   chkstate(State),
+	   writef("%-10   %2 \n",City,State),
+	   fail.
+	   
+	   go.
+
+	   location("Jackson","MS").
+	   location("Washington","DC").
+	   location("Raleigh","NC").
+	
+	chkstate("DC"):-
+		fail.
+	chkstate(_).
+
+
+Excercise:1
+Rull:1
+domains
+	name,street,city,state,zip=string
+predicates
+	address(name,street,city,state,zip)
+	go
+clauses
+	go:-
+	  address(Name,Street,City,State,Zip),
+	  write(Name),nl,
+	  write(Street),nl,
+	  write(City,",",State,",",Zip),nl,nl,
+	  fail.
+
+	go.
+
+	address("Abir","32-D","Rajshahi","Raj","6270").
+	address("Abid","31-D","Dhaka","Dh","8770").
+	address("Sumi","77-S","Khulna","Kh","6780").
+	address("Nobi","32-D","Rajshahi","Raj","6270").
+
+Rull:2
+
+domains
+	name,street,city,state,zip=string
+predicates
+	address(name,street,city,state,zip)
+	go
+clauses
+	go:-
+	   writef("%-5 %-5  %-10  %-4  %5 \n","Name","Street","City","State","Zip"),  
+	  address(Name,Street,City,State,Zip),
+	  
+	  write(Name,",",Street,",",City,",",State,",",Zip),nl,nl,
+	  fail.
+
+	go.
+
+	address("Abir","32-D","Rajshahi","Raj","6270").
+	address("Abid","31-D","Dhaka","Dh","8770").
+	address("Sumi","77-S","Khulna","Kh","6780").
+	address("Nobi","32-D","Rajshahi","Raj","6270").
+
+
+Exercise:2 
+predicates
+	location(string,string)
+	go
+	chkstate(string)
+clauses
+	go:-
+	   writef("%-10   %5 \n","City","State"),
+	   fail.
+	go:-
+	   location(City,State),
+	   not(chkstate(State)),
+	   writef("%-10   %2 \n",City,State),
+	   fail.
+	   
+	   go.
+	chkstate("DC").
+
+	   location("Jackson","MS").
+	   location("Washington","DC").
+	   location("Raleigh","NC").
+	
+	
+Chapter:8
+problem-1:Simple recursion problem. figure 8.1
+
+predicates
+	 count(integer)
+clauses
+	count(9).
+	count(N):-
+		write("  ",N),
+		M=N+1,
+		count(M).
+
+Problem-2:logon example without recursion. Figure 8.2
+
+
+
+Rull:2
+domains
+	name,password=string
+predicates
+	getinput(name,password)
+	logon
+user(name,password)
+
+clauses
+	logon:-
+	clearwindow,
+	getinput(_,_),
+	write("You are now logged on."),nl.
+
+	logon:-
+	
+		write("Sorry,You are not permitted access."),nl.
+
+ 	getinput(Name,Password):-
+		write("Please Enter Your Name: "),
+		readln(Name),nl,
+
+		write("Please Enter Your Password: "),
+		readln(Password),nl,
+		user(Name,Password).
+
+
+User(BABU,Babu18).
+User(aKHI,18AKie).
+user(Pakhi,Pakhi18).
+
+Problem :3 logon example with repeat predicate. Figure 8.3
+
+trace
+domains
+	name,password=symbol
+predicates
+	getinput(name,password)
+	logon
+	user(name,password)
+	repeat
+
+clauses
+	repeat.
+	repeat:-
+		repeat.
+
+	logon:-
+	clearwindow,
+	getinput(_,_),
+	write("You are now logged on."),nl.
+
+	logon:-
+		repeat,
+		write("Sorry,You are not permitted access."),nl,
+		write("Please try again."),nl,
+		getinput(_,_),
+		write("You are now logged on."),nl.
+
+ 	getinput(Name,Password):-
+		write("Please Enter Your Name: "),
+		readln(Name),nl,
+		write("Please Enter Your Password: "),
+		readln(Password),nl,
+		user(Name,Password).
+
+
+User(babu,babu18).
+User(akhi,akhie).
+user(pakhi,pakhi18).
+// gola logon, then press F10 to check every step output
+
+problem:4 figure 8.4 omittingterminating condition
+trace
+predicates
+	 count(integer)
+clauses
+	
+	count(N):-
+		write("  ","Last"),  %use last or "Last" but not Last
+		M=N+1,
+		count(M),
+		write("You will never get here").
+
+Problem : 5 Figure 8.5
+trace
+predicates
+	 count(integer)
+clauses
+	count(5).
+	count(N):-
+		write("  ",last),
+		M=N+1,
+		count(M),
+		write("You made it here. Layer",last),nl.
+
+
+Problem: 6 Alternate rule of recursion without repeat predicate figure 8.6
+
+domains
+	name,password=symbol
+predicates
+	getinput(name,password)
+	logon
+	user(name,password)
+
+clauses
+	logon:-
+	getinput(Name,Password),
+	user(Name,Password),
+	write("You are now logged on."),nl.
+
+	logon:-
+	
+		write("Sorry,You are not permitted access."),
+		write("Please try again."),nl,
+		logon.
+
+ 	getinput(Name,Password):-
+		write("Please Enter Your Name: "),
+		readln(Name),nl,
+
+		write("Please Enter Your Password: "),
+		readln(Password),nl.
+		
+
+
+user(babu,babu18).
+user(akhi,akhie).
+user(pakhi,pakhi18).
+
+Exercise1:
+domains
+	name,password=symbol
+predicates
+	getinput(name,password)
+	logon(integer)
+	user(name,password)
+	go
+	
+
+clauses
+
+	go:-
+		logon(3),
+		write("You are now logged on."),nl.
+
+
+	logon(0):-!,
+		write("Sorry,You are not permitted access."),nl,
+		fail.
+	
+	logon(_):-
+		
+		getinput(Name,Password),
+		user(Name,Password).
+
+	logon(X):-
+		write("Illegal entry."),nl,
+		XX=X-1,
+		logon(XX).
+
+
+ 	getinput(Name,Password):-
+		write("Please Enter Your Name: "),
+		readln(Name),nl,
+		write("Please Enter Your Password: "),
+		readln(Password),nl.
+		
+
+
+User(babu,babu18).
+User(akhi,akhie).
+user(pakhi,pakhi18).
+
+
+Chapter: 9
+Problem:1 Example ofthe cut predicate figure 9.1
+
+
+
+predicates
+	location(string,string)
+	go
+	chkstate(string)
+
+clauses
+	go:-
+		writef("%-10  %5 \n","CITY","STATE"),
+		fail.
+
+	go:-
+		location(City,State),
+		chkstate(State),
+		writef("%-10  %5 \n",City,State),
+		fail.
+
+	go.
+
+location("Jackson","MS").
+location("Washington","DC").
+location("Raleigh","NC").
+
+chkstate("DC"):-
+	!,fail.
+chkstate(_).
+
+Problem 2 Medical diagnosis system using cut
+
+domains
+      	disease, indication = symbol
+      	patient, name = string
+      
+predicates
+     	hypothesis(patient,disease)
+     	symptom(patient,indication)
+     	response(char)
+     	go
+     	go_once
+	repeat
+     
+clauses
+	go :-
+		repeat,
+		go_once,
+		write("Would you like to try again (y/n) ?"),
+		response(Replay),
+		Replay='n'.
+
+
+	go.
+	
+	repeat.
+	repeat:-
+		repeat.
+	go_once:-
+		write("What is the patient's name? "),
+		readln(Patient),
+		hypothesis(Patient,Disease),!,
+		write(Patient," probably has ",Disease,"."),nl.
+		
+	go_once:-
+
+		write("Sorry, I don't seem to be able to"),nl,
+		write("diagonose the disease."),nl.
+		
+	symptom(Patient,fever) :-
+		write("Does ",Patient," have a fever (y/n) ?"),
+		response(Reply),
+		Reply='y'.
+   
+   	symptom(Patient,rash) :-
+		write("Does ",Patient," have a rash (y/n) ?"),
+		response(Reply),
+		Reply='y'.
+		
+	symptom(Patient,headache) :-
+		write("Does ",Patient," have a headache (y/n) ?"),
+		response(Reply),
+		Reply='y'.
+		
+	symptom(Patient,runny_nose) :-
+		write("Does ",Patient," have a runny_nose (y/n) ?"),
+		response(Reply),
+		Reply='y'.
+   	
+   	symptom(Patient,conjunctivities) :-
+		write("Does ",Patient," have a conjunctivitis (y/n) ?"),
+		response(Reply),
+		Reply='y'.
+   
+   	symptom(Patient,cough) :-
+		write("Does ",Patient," have a cough (y/n) ?"),
+		response(Reply),
+		Reply='y'.
+   
+   	symptom(Patient,body_ache) :-
+		write("Does ",Patient," have a body_ache (y/n) ?"),
+		response(Reply),
+		Reply='y'.
+		
+	symptom(Patient,chills) :-
+		write("Does ",Patient," have a chills (y/n) ?"),
+		response(Reply),
+		Reply='y'.	
+		
+	symptom(Patient,sore_throat) :-
+		write("Does ",Patient," have a sore_throat (y/n) ?"),
+		response(Reply),
+		Reply='y'.
+		
+	symptom(Patient,sneezing) :-
+		write("Does ",Patient," have a sneezing (y/n) ?"),
+		response(Reply),
+		Reply='y'.
+		
+	symptom(Patient,swollen_glands) :-
+		write("Does ",Patient," have swollen glands (y/n) ?"),
+		response(Reply),
+		Reply='y'.
+			
+	hypothesis(Patient,measles) :-    
+   		symptom(Patient,fever),
+   		symptom(Patient,cough),
+   		symptom(Patient,conjunctivities),
+   		symptom(Patient,runny_nose),
+   		symptom(Patient,rash).
+   
+	hypothesis(Patient,german_measles):-    
+   		symptom(Patient,fever),
+   		symptom(Patient,headache),
+   		symptom(Patient,runny_nose),
+   		symptom(Patient,rash).
+   
+	hypothesis(Patient,flu):-    
+   		symptom(Patient,fever),
+   		symptom(Patient,headache),
+   		symptom(Patient,body_ache),
+   		symptom(Patient,conjunctivities),
+   		symptom(Patient,chills),
+   		symptom(Patient,sore_throat),
+   		symptom(Patient,cough),
+   		symptom(Patient,runny_nose).
+   	
+   	  
+  	hypothesis(Patient,comon_cold):-    
+   		symptom(Patient,headache),
+   		symptom(Patient,sneezing),
+   		symptom(Patient,sore_throat),
+   		symptom(Patient,runny_nose),
+   		symptom(Patient,chills).
+   
+	hypothesis(Patient,mumps):-    
+   		symptom(Patient,fever),
+   		symptom(Patient,swollen_glands).
+   
+	hypothesis(Patient,chicken_pox):-    
+   		symptom(Patient,fever),
+   		symptom(Patient,chills),
+   		symptom(Patient,body_ache),
+   		symptom(Patient,rash).
+   
+	hypothesis(Patient,whooping_cough):-    
+   		symptom(Patient,cough),
+   		symptom(Patient,sneezing),
+   		symptom(Patient,runny_nose).
+   		
+   	response(Reply) :-
+   		readchar(Reply),
+   		write(Reply),nl.
+
